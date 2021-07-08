@@ -1,16 +1,16 @@
 package com.example.influxbeta.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.influxbeta.adapter.FoodDataAdapter.Companion.final_prince
-import com.example.influxbeta.MainActivity.Companion.currencyType
-import com.example.influxbeta.MainActivity.Companion.foodcartData
+import com.example.influxbeta.view.activity.MainActivity.Companion.currencyType
+import com.example.influxbeta.view.activity.MainActivity.Companion.foodcartData
 import com.example.influxbeta.R
 import com.example.influxbeta.databinding.FoodItemBinding
 import com.example.influxbeta.model.Fnblist
@@ -48,6 +48,7 @@ class MyViewHolder(val binding: FoodItemBinding) : RecyclerView.ViewHolder(bindi
 
     var quantirycount =0
     var price_amount =0.0
+    var size_selected = false
     fun bind(item: Fnblist)
     {
 
@@ -69,15 +70,18 @@ class MyViewHolder(val binding: FoodItemBinding) : RecyclerView.ViewHolder(bindi
                     when (checkedId) {
                         R.id.radioButton1 -> {
                             radioButton1.isChecked = true
+                            size_selected = true
                             price_amount = getThePrice("SMALL", item.subitems)!!.toDouble()
 
                         }
                         R.id.radioButton2 -> {
                             radioButton2.isChecked = true
+                            size_selected = true
                             price_amount = getThePrice("MEDIUM", item.subitems)!!.toDouble()
                         }
                         R.id.radioButton3 -> {
                             radioButton3.isChecked = true
+                            size_selected = true
                             price_amount = getThePrice("LARGE", item.subitems)!!.toDouble()
                         }
                     }
@@ -88,11 +92,13 @@ class MyViewHolder(val binding: FoodItemBinding) : RecyclerView.ViewHolder(bindi
 
             } else if (item.subItemCount == 1) {
                 RadioUI(radioButton1, radioButton2, radioButton3)
+                size_selected = true
                 price_amount = getThePrice(item.subitems[0].name, item.subitems)!!.toDouble()
                 binding.price.text = currencyType + " " + price_amount
 
             } else if (item.subItemCount == 0) {
                 RadioUI(radioButton1, radioButton2, radioButton3)
+                size_selected = true
                 price_amount = item.itemPrice.toDouble()
                 binding.price.text = currencyType + " " + price_amount
 
@@ -109,20 +115,38 @@ class MyViewHolder(val binding: FoodItemBinding) : RecyclerView.ViewHolder(bindi
             foodItemName.text = item.name
 
             minusPic.setOnClickListener {
-                if (quantirycount > 0) {
-                    quantirycount = quantirycount-1
-                    quantity.text = quantirycount.toString()
-                    updatepricequantity()
-                    updateCart(item.vistaFoodItemId.toInt(),item.name,quantirycount,price_amount.toDouble())
+                if(size_selected)
+                {
+                    if (quantirycount > 0) {
+                        quantirycount = quantirycount-1
+                        quantity.text = quantirycount.toString()
+                        updatepricequantity()
+                        updateCart(item.vistaFoodItemId.toInt(),item.name,quantirycount,price_amount.toDouble())
+                    }
                 }
+                else
+                {
+                    Toast.makeText(binding.minusPic.context, "Select the Size of item", Toast.LENGTH_LONG).show()
+                }
+
             }
 
             plusPic.setOnClickListener {
-
-                quantirycount = quantirycount+ 1
-                quantity.text = quantirycount.toString()
-                updatepricequantity()
-                updateCart(item.vistaFoodItemId.toInt(),item.name,quantirycount,price_amount.toDouble())
+                if(size_selected) {
+                    quantirycount = quantirycount + 1
+                    quantity.text = quantirycount.toString()
+                    updatepricequantity()
+                    updateCart(
+                        item.vistaFoodItemId.toInt(),
+                        item.name,
+                        quantirycount,
+                        price_amount.toDouble()
+                    )
+                }
+                else
+                {
+                    Toast.makeText(binding.minusPic.context, "Select the Size of item", Toast.LENGTH_LONG).show()
+                }
             }
 
 
@@ -158,16 +182,15 @@ class MyViewHolder(val binding: FoodItemBinding) : RecyclerView.ViewHolder(bindi
 
 
     private fun getThePrice(
-        s: String,
+        size: String,
         subitems: List<Subitem>
     ): String? {
 
         var price: String = ""
-
         for (i in subitems.indices) {
-            var name = subitems[i].name.replace(" ", "")
-            var s1 = s.replace(" ", "")
-            if (name == s1) {
+            var _size = subitems[i].name.replace(" ", "")
+            var size_temp = size.replace(" ", "")
+            if (size_temp == _size) {
                 price = subitems[i].subitemPrice.toString()
             }
         }

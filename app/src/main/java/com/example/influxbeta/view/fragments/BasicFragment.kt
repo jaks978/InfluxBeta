@@ -1,4 +1,4 @@
-package com.example.influxbeta.fragments
+package com.example.influxbeta.view.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater

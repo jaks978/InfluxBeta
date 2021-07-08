@@ -13,8 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.InfluxBeta">
-        <activity android:name=".MainActivity" android:theme="@style/Theme1.InfluxBeta"></activity>
-        <activity android:name=".Splashscreen" android:theme="@style/Theme1.InfluxBeta">
+        <activity android:name=".view.activity.MainActivity" android:theme="@style/Theme1.InfluxBeta" android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

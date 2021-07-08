@@ -1,7 +1,6 @@
-package com.example.influxbeta.bottomsheet
+package com.example.influxbeta.view.bottomsheet
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView

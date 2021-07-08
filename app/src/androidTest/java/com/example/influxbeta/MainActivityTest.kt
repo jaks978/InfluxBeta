@@ -1,11 +1,10 @@
 package com.example.influxbeta
 
-import androidx.constraintlayout.utils.widget.MockView
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.matcher.ViewMatchers
-import org.junit.Assert.*
+import com.example.influxbeta.view.activity.MainActivity
 import org.junit.Before
 import org.junit.Test
 

@@ -1,4 +1,4 @@
-package com.example.influxbeta.bottomsheet
+package com.example.influxbeta.view.bottomsheet
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.influxbeta.MainActivity
+import com.example.influxbeta.view.activity.MainActivity
 import com.example.influxbeta.R
 import com.example.influxbeta.databinding.LayoutFinalAmountBinding
 import com.example.influxbeta.model.FoodCart
